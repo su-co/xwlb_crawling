@@ -38,7 +38,7 @@ base_url_2016_2024 = "https://tv.cctv.com/lm/xwlb/day/{date}.shtml"
 
 ### 代码
 
-[su-co/xwlb_crawling (github.com)](https://github.com/su-co/xwlb_crawling)
+[[su-co/xwlb_crawling (github.com)](https://github.com/su-co/xwlb_crawling)](https://github.com/su-co/xwlb_crawling)
 
 ### 结果
 https://github.com/su-co/xwlb_crawling/blob/main/xwlb_urls.txt
