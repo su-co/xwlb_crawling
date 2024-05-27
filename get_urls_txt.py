@@ -1,5 +1,5 @@
 import datetime
-from utils import generate_xwlb_url_txt
+from utils.utils_get_urls import generate_xwlb_url_txt
 
 base_url_2011_2015 = "https://cctv.cntv.cn/lm/xinwenlianbo/{date}.shtml"
 base_url_2016_2024 = "https://tv.cctv.com/lm/xwlb/day/{date}.shtml"
