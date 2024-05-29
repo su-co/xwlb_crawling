@@ -42,3 +42,37 @@ base_url_2016_2024 = "https://tv.cctv.com/lm/xwlb/day/{date}.shtml"
 
 ### 结果
 [https://github.com/su-co/xwlb_crawling/blob/main/xwlb_urls.txt](https://github.com/su-co/xwlb_crawling/blob/master/xwlb_urls.txt)
+
+
+
+## urls_redirect.py
+
+### 重定向URL
+
+包括更换 URL 前缀、去除分隔符等
+
+### 结果
+
+[xwlb_crawling/xwlb_redir_urls.txt at master · su-co/xwlb_crawling (github.com)](https://github.com/su-co/xwlb_crawling/blob/master/xwlb_redir_urls.txt)
+
+
+
+## download.py
+
+### 问题描述
+
+新闻联播视频采取M3U8的视频格式，是一种基于HTTP Live Streaming（HLS）协议的视频文件格式。与传统的视频格式不同，M3U8视频格式将整个视频**分成多个小片段进行传输**，每个分片的URL均不同。
+
+我们需要找到真实的m3u8的地址，并根据m3u8找到真实的分片地址。
+
+### 解决方案
+
+- 利用 browsermob 代理监听chrome和服务器之间的交互，抓取真实的m3u8地址
+- 根据m3u8地址构建真实的分片地址
+- 下载每个ts分片，并最终合并成一个完整的视频
+
+参考文献：[Python爬取CCTV视频-CSDN博客](https://blog.csdn.net/Uncle_wangcode/article/details/127677768)
+
+### 代码
+
+[xwlb_crawling/download.py at master · su-co/xwlb_crawling (github.com)](https://github.com/su-co/xwlb_crawling/blob/master/download.py)
