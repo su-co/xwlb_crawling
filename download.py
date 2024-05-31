@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import asyncio
 from utils.utils_download import url2date, get_split_video_url, download_all, merge
 
