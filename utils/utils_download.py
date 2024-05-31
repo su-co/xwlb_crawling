@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import time, re, requests, asyncio, aiohttp, aiofiles, os, shutil
 from browsermobproxy import Server
 from selenium import webdriver
