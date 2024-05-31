@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from utils.utils_urls_redirect import url_redirect
 
 with open('xwlb_urls.txt', 'r') as f:
