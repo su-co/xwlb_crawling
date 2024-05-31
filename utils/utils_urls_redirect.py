@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 def url_redirect(url):
     # 去掉末尾的 ~ 字符 和换行符
     url = url.rstrip('~\n')
