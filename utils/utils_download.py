@@ -3,13 +3,14 @@
 import time, re, requests, asyncio, aiohttp, aiofiles, os, shutil
 from browsermobproxy import Server
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 def get_hls_url(url):
     """
         监听浏览器访问CCTV视频网址的过程，找到真实m3u8地址
     """
     # 设置 browsermob 代理
-    browsermobproxy_client_location = "/home/hm/xwlb_crawling/browsermob-proxy-2.1.4/bin/browsermob-proxy"
+    browsermobproxy_client_location = "./browsermob-proxy-2.1.4/bin/browsermob-proxy"
     server = Server(browsermobproxy_client_location)
     server.start()
     proxy = server.create_proxy(params={"trustAllServers": "true"})
@@ -23,7 +24,11 @@ def get_hls_url(url):
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
-    browser = webdriver.Chrome(options = chrome_options)
+    chrome_options.add_argument('--ignore-certificate-errors-spki-list')
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--ignore-ssl-errors')
+    s = Service(chromedriver_location)
+    browser = webdriver.Chrome(options = chrome_options, service = s)
 
     # 加载
     proxy.new_har("Example", options={'captureHeaders': True, 'captureContent': True})
@@ -55,7 +60,7 @@ def get_split_video_url(url):
         获取分片video的URL
     """
     hls_url = get_hls_url(url)
-    
+
     # 获取失败，返回为空（失败的原因，例如视频不存在、响应时间不足等）
     if not hls_url:
         return None
@@ -128,10 +133,10 @@ async def download_all(url):
     
 def merge(date):
     # 设置文件所在目录
-    directory = '/home/hm/xwlb_crawling/temp'
+    directory = './temp'
 
     # 创建一个新文件用于合并
-    output_file = os.path.join('/home/hm/xwlb_crawling/xwlb', date)
+    output_file = os.path.join('./xwlb', date)
 
     # 初始化一个空列表保存所有ts文件的内容
     contents = []
@@ -147,10 +152,11 @@ def merge(date):
     with open(output_file, 'wb') as file:
         file.write(b'\n'.join(contents))
 
-    print(f'文件已成功合并到 {output_file}')
+   #  print(f'文件已成功合并到 {output_file}')
     
     # temp 文件夹归空
     if os.path.exists(directory):
         shutil.rmtree(directory)
         os.makedirs(directory)
     
+    return output_file 
