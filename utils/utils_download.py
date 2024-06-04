@@ -71,6 +71,9 @@ def get_split_video_url(url):
         if not line.startswith("#"):
             mid = line
             break
+    
+    if not mid:
+        return None
         
     combined_url = hls_url.split('/')[0] + '//' + hls_url.split('/')[2] + mid
     
