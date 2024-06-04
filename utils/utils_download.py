@@ -119,7 +119,7 @@ async def download_all(url):
     url_template = f"{url}/{{}}.ts"
     
     # 信号量
-    sem = asyncio.Semaphore(100)
+    sem = asyncio.Semaphore(20)
     tasks = []
     for i in range(200): # 新闻联播通常为200个分片
         url = url_template.format(i) # 根据模板创建真实的视频地址
