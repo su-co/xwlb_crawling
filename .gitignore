@@ -4,4 +4,5 @@
 /temp/
 /xwlb/
 /xwlbText/
+/utils/__pycache__/
 *.log
