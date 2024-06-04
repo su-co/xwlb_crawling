@@ -5,13 +5,12 @@ from tqdm import tqdm
 from utils.utils_download import url2date, get_split_video_url, download_all, merge
 
 def down(url, video_name):    
-    # �~N��~O~V��~F��~Q�~H~F�~I~Gurl
+    # 获取分片
     url = get_split_video_url(url)
 
-    # �~^~D建��~F��~Q�~H~F�~I~Gurl模�~]���~L��~B步�~H��~O~V
     if url:
-        asyncio.run(download_all(url)) # ��~K载�~H~F�~I~G
-        output_file = merge(video_name) #�~P~H并�~H~F�~I~G�~H�xwlb/$video_name
+        asyncio.run(download_all(url)) # 下载分片
+        output_file = merge(video_name) # 合并
         return output_file
 
 def check_file(file_path):
