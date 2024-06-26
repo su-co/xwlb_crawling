@@ -22,3 +22,27 @@ pip install browsermob-proxy
 http://bmp.lightbody.net/
 ```
 
+## 获取视频下载链接
+```python
+python get_urls_txt.py
+```
+
+## 视频下载链接重定向
+```python
+python urls_redirect.py
+```
+
+## 视频下载
+```python
+python download.py
+```
+
+## 视频格式转换
+```python
+python convert.py
+```
+
+## 新闻联播演讲稿下载
+```python
+python dowload_xwlb_text.py
+```
