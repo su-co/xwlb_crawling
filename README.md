@@ -8,3 +8,17 @@
 
 
 ## 快速开始
+-  安装java8
+```shell
+apt-get install openjdk-8-jdk
+java -version
+```
+-  安装browsermob-proxy
+```shell
+pip install browsermob-proxy
+```
+-  下载java端BrowserMob-Proxy包
+```
+http://bmp.lightbody.net/
+```
+
