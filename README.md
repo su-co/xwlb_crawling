@@ -36,6 +36,7 @@ python urls_redirect.py
 ```python
 python download.py
 ```
+ps：如果遇到问题，请使用`sh clean.sh`之后，重新运行程序
 
 ## 视频格式转换
 ```python
