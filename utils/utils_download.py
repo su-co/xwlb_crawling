@@ -13,7 +13,9 @@ def get_hls_url(url):
     browsermobproxy_client_location = "./browsermob-proxy-2.1.4/bin/browsermob-proxy"
     server = Server(browsermobproxy_client_location)
     server.start()
+    # print(server)
     proxy = server.create_proxy(params={"trustAllServers": "true"})
+    # print(proxy)
 
     # S设置 Chrome webdriver
     chrome_location = "/usr/bin/google-chrome"
@@ -30,6 +32,7 @@ def get_hls_url(url):
     s = Service(chromedriver_location)
     browser = webdriver.Chrome(options = chrome_options, service = s)
 
+    # print("browser")
     # 加载
     proxy.new_har("Example", options={'captureHeaders': True, 'captureContent': True})
     browser.get(url)
@@ -52,20 +55,29 @@ def get_hls_url(url):
 
     server.stop()
     browser.quit()
+    os.environ.pop('all_proxy', None)
     
-    return hls_url
+    return hls_url, server, browser
 
 def get_split_video_url(url):
     """
         获取分片video的URL
     """
-    hls_url = get_hls_url(url)
+    hls_url, server, browser = get_hls_url(url)
+    # print("****")
+    # print(hls_url)
 
     # 获取失败，返回为空（失败的原因，例如视频不存在、响应时间不足等）
     if not hls_url:
+        server.stop()
+        browser.quit()
+        os.environ.pop('all_proxy', None)
         return None
     
-    response = requests.get(hls_url)
+    
+    proxies = { "http": None, "https": None}
+
+    response = requests.get(hls_url, proxies=proxies)
 
     for line in response.content.decode().splitlines():
         if not line.startswith("#"):
@@ -77,6 +89,10 @@ def get_split_video_url(url):
         
     combined_url = hls_url.split('/')[0] + '//' + hls_url.split('/')[2] + mid
     
+    server.stop()
+    browser.quit()
+    os.environ.pop('all_proxy', None)
+
     return combined_url.rsplit('/', 1)[0]
 
 def url2date(url):
@@ -122,7 +138,7 @@ async def download_all(url):
     url_template = f"{url}/{{}}.ts"
     
     # 信号量
-    sem = asyncio.Semaphore(20)
+    sem = asyncio.Semaphore(10)
     tasks = []
     for i in range(200): # 新闻联播通常为200个分片
         url = url_template.format(i) # 根据模板创建真实的视频地址

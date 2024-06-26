@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import asyncio, os
+import asyncio, os, subprocess
 from tqdm import tqdm
 from utils.utils_download import url2date, get_split_video_url, download_all, merge
 
@@ -40,8 +40,10 @@ for url in tqdm(urls, desc='Processing URLs', unit='url'):
     # 获取日期, 作为视频名称
     video_name = url2date(url)
 
-    while(True):
+    for i in range(5):
+        # print(i)
         output_file = down(url, video_name)
+        print(output_file)
         exist, size = check_file(output_file)
         if not exist:
             break

@@ -14,14 +14,17 @@ total_days = (end_date - datetime.date(2015, 12, 22)).days + 1
 
 # 遍历到结束日期
 # current_date = datetime.date(2015, 12, 22)
-current_date = datetime.date(2019, 10, 1)
+current_date = datetime.date(2024, 1, 1)
 with tqdm(total=total_days, unit="日", desc="遍历进度") as pbar:
     while current_date <= end_date:
-        formatted_date_path = current_date.strftime('%Y/%m/%d')
-        formatted_date_text = f"{current_date.year}年{current_date.month}月{current_date.day}日"
-        
-        url = original_url.replace('2015/12/22', formatted_date_path)
-        url = url.replace('2015年12月22日', formatted_date_text)
+        # data for 2024
+        url = original_url.replace('2015/12/22', current_date.strftime('%Y/%m/%d'))
+        url = url.replace('2015年12月22日', current_date.strftime('%Y年%m月%d日'))
+        # data before 2024
+        # formatted_date_path = current_date.strftime('%Y/%m/%d')
+        # formatted_date_text = f"{current_date.year}年{current_date.month}月{current_date.day}日"
+        # url = original_url.replace('2015/12/22', formatted_date_path)
+        # url = url.replace('2015年12月22日', formatted_date_text)
         
         print(url)
         text_name = url2date(url)
